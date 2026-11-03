@@ -15,6 +15,8 @@
 
 不支持：原子组、占有量词、递归、条件子模式、`\p{…}`、`x`/`a`/`L` 标志。
 
+许可证：AGPL-3.0，见 [LICENSE](LICENSE)。
+
 语义细节与 Python 3.14 一致，例如：
 - `$` 也匹配末尾换行之前的位置；
 - `\Z` 只匹配文本末尾；
@@ -24,12 +26,10 @@
 
 ## 用法
 
-`build.zig.zon`：
+添加依赖（会写入 `build.zig.zon` 的 `.url` 和 `.hash`）：
 
-```zig
-.dependencies = .{
-    .zigregex = .{ .path = "../zigregex" }, // 或 .url + .hash
-},
+```sh
+zig fetch --save=zigregex "git+https://gitee.com/graviton/zigregex.git#<commit>"
 ```
 
 `build.zig`：

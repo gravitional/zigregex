@@ -23,7 +23,12 @@
    uv run --no-project --python 3.14 python tools/regex_diff.py -n 40000 --seed 1
    ```
    新增语法时，同时扩充 `tools/regex_diff.py` 的生成器，让新语法被覆盖到。
-4. 下游 [typlint](../typlint) 通过 `path` 依赖本仓库。改动公开 API 后，在 typlint 中运行 `zig build test`。
+4. 下游 [typlint](../typlint) 以 git URL 加 hash 依赖本仓库在 gitee 上的提交。改动公开 API 后，在 typlint 中运行 `zig build test --fork=/data/yangmy/zigregex`，确认无误后再推送本仓库，最后在 typlint 中用 `zig fetch --save` 升级依赖。
+
+## 远端
+
+- `origin`（https://gitee.com/graviton/zigregex ）是主仓库，下游从这里拉取，本地 master 跟踪它；`github`（https://github.com/gravitional/zigregex ）是镜像，推送时两处都推。
+- Zig 的包下载器经过本机 HTTP 代理（`127.0.0.1:10808`）会失败，`zig fetch` 时要清掉代理变量：`env -u HTTP_PROXY -u HTTPS_PROXY -u http_proxy -u https_proxy -u ALL_PROXY -u all_proxy zig fetch ...`。
 
 ## 约定
 
